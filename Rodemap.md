@@ -88,3 +88,19 @@
 - git branch -M main -
 - git remote add origin https://github.com/nikitakushwaha08/Grocery_Store.git -
 - git push -u origin main -
+
+User input karta hai →
+handleChange event se value leta hai →
+setData me save hota hai →
+User submit karta hai →
+handleSubmit chalta hai →
+preventDefault page reload roakta hai →
+API call hoti hai →
+.then response ka wait karta hai →
+res milta hai →
+setResponse se message UI me dikhta hai
+
+HW => jb hm data delete kre to hme pta chalna chahiye ki kon si id ka kya data delete hua h
+check update ki hme sari dari infi mil rhi h ya nhi matlb ki update hone ke phle data kya tha or update hone ke bad data kya ho gya h
+jb kisi ka data delete ho jaye to us number pr nyi id ani chahiye ya nhi agr us number pr nya data nhi ata h to us number ka kya hona chahiye
+All Delete krne pr delete message deta h lekin jb dobara products hit kiya jata h to fir se pura data dikha deta h esa kyu
