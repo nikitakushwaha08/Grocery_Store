@@ -76,15 +76,15 @@
     - Ex. Time is saved,
     - Accurate profit calculations,
     - Manual work is reduced
+    - Manual work is reduced
 
-### Relation -
-
-- if BACKEND talk DATABASE create DB connection.
-- if BACKEND talk FRONTEND create APIs.
+---
 
 ### Push code in github -
 
 - git init -
 - git add . -
 - git commit -m "Initial backend API setup" -
--
+- git branch -M main -
+- git remote add origin https://github.com/nikitakushwaha08/Grocery_Store.git -
+- git push -u origin main -

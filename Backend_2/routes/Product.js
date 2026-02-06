@@ -1,4 +1,4 @@
-import connection from "./CreateConnection.js";
+import connection from "../CreateConnection.js";
 
 // Get all products
 export const getProduct = (req, res) => {
@@ -9,9 +9,11 @@ export const getProduct = (req, res) => {
       console.error("Product Error", err);
       res.status(500).json({ error: "Database error" });
     } else {
-      res
-        .status(200)
-        .json({ message: "Get all product successfully", product: result });
+      res.status(200).json({
+        // message: "Get all product successfully",
+        // count: result.length,
+        data: result,
+      });
     }
   });
 };
@@ -24,8 +26,8 @@ export const getById = (req, res) => {
 
   connection.query(sql, [product_id], (err, result) => {
     if (err) {
-      console.error("Product Error", err);
-      res.status(500).json({ error: "Database error" });
+      // console.error("Product Error", err);
+      res.status(500).json({ error: err.message });
     } else {
       if (result.length === 0) {
         res.status(404).json({ message: "Product not found" });
@@ -39,14 +41,16 @@ export const getById = (req, res) => {
 // Add new product
 export const addProduct = (req, res) => {
   const { product_name, price, quantity } = req.body;
+  // console.log(req.body);
 
   const sql =
     "insert into product (product_name, price, quantity)  values (?, ?, ?)";
 
   connection.query(sql, [product_name, price, quantity], (err, result) => {
+    // console.log("result", result, " error", err);
     if (err) {
-      // console.err("Not add new product: ", err);
-      res.status(500).json({ error: "Product insertion failed" });
+      console.log("Not add new product: ", err);
+      return res.status(500).json({ error: "Internal server error" });
     } else {
       res.status(201).json({
         message: "New product added successfuly",
@@ -88,6 +92,29 @@ export const deleteAll = (req, res) => {
       res.status(500).json({ error: "Deletion failed" });
     } else {
       res.status(200).json({ message: "Deleted all products successfully" });
+    }
+  });
+};
+
+// Put Product by id
+export const updateById = (req, res) => {
+  const product_id = req.params.id;
+  // console.log("product id", product_id);
+
+  const data = req.body;
+  // console.log("data", data);
+
+  const sql = "update product set ? where product_id = ?";
+
+  connection.query(sql, [data, product_id], (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Product updation failed" });
+    } else {
+      if (result.affectedRows === 0) {
+        res.status(404).json({ message: "Product not found" });
+      } else {
+        res.status(200).json({ message: "Product updated successfully" });
+      }
     }
   });
 };
