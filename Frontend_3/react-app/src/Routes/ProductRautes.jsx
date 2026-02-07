@@ -10,12 +10,15 @@ function ProductRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/products" element={<GetAllProducts />} />
+        <Route path="/products" element={<GetAllProducts />} /> {/* done */}
         <Route path="/product/:id" element={<GetProductById />} />
-        <Route path="/product/new" element={<PostProduct />} />
+        <Route path="/product/new" element={<PostProduct />} /> {/* done */}
         <Route path="/product/delete/:id" element={<RemoveProductById />} />
+        {/* done */}
         <Route path="/product/delete" element={<RemoveAllProduct />}></Route>
+        {/* done */}
         <Route path="/product/put/:id" element={<UpdateProduct />}></Route>
+        {/* done */}
       </Routes>
     </BrowserRouter>
   );

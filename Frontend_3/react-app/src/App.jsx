@@ -1,4 +1,5 @@
 import "./App.css";
+
 import { useEffect, useState } from "react";
 import {
   getProduct,
@@ -24,27 +25,51 @@ function GetAllProducts() {
   return (
     <div className="App">
       <h2>Home Page</h2>
-      <link to="./products">
-        <button>Get All Products</button>
-      </link>
+
+      <br />
+      <br />
+      <Link to="/product/new">
+        <button>Add New Product</button>
+      </Link>
+
+      <Link to="/product/delete">
+        <button style={{ marginLeft: "20px" }}>Delete All Products</button>
+      </Link>
+      <br />
+      <br />
+      <br />
+
       {data && data.length > 0 ? (
         <table border="1">
           <thead>
             <tr>
+              <th>Se. No.</th>
               <th>Product ID</th>
               <th>Product Name</th>
               <th>Price</th>
               <th>Quantity</th>
+              <th>Actions </th>
             </tr>
           </thead>
 
           <tbody>
             {data.map((e, index) => (
               <tr key={e.product_id}>
-                <td>{e.product_id}</td>
+                <td>{index + 1}</td>
+                <td>
+                  <Link to={`/product/${e.product_id}`}>{e.product_id}</Link>
+                </td>
                 <td>{e.product_name}</td>
                 <td>{e.price}</td>
                 <td>{e.quantity}</td>
+                <td>
+                  <Link to={`/product/delete/${e.product_id}`}>
+                    <button>Delete</button>
+                  </Link>
+                  <Link to={`/product/put/${e.product_id}`}>
+                    <button style={{ marginLeft: "10px" }}>Update</button>
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -146,6 +171,12 @@ function PostProduct() {
 
   return (
     <div className="App">
+      <Link to="/products">
+        <button>Show product list</button>
+      </Link>
+      <br />
+      <br />
+      <br />
       <h3>Add Product</h3>
 
       <form onSubmit={handleSubmit}>
@@ -191,8 +222,13 @@ function RemoveProductById() {
 
   return (
     <div>
-      <h2>Delete Product</h2>
-      <p>Product ID: {id}</p>
+      <Link to="/products">
+        <button>Show product list</button>
+      </Link>
+      <br />
+      <br />
+      <br />
+      <p>Product has beed deleted : {id}</p>
       <button onClick={handleDelete}>Delete</button>
     </div>
   );
@@ -208,7 +244,14 @@ function RemoveAllProduct() {
 
   return (
     <div>
-      <button onClick={handleDelete}>Delete All Products</button>
+      <Link to="/products">
+        <button>Show product list</button>
+      </Link>
+      <br />
+      <br />
+      <button onClick={handleDelete}>
+        <p>All Productes Are Deleted Successfully </p>
+      </button>
     </div>
   );
 }
@@ -242,6 +285,9 @@ function UpdateProduct() {
 
   return (
     <>
+      <Link to="/products">
+        <button>Show product list</button>
+      </Link>
       <form onSubmit={handleUpdate}>
         <input
           name="product_id"
