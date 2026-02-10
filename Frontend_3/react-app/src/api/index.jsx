@@ -80,7 +80,6 @@ export const removeProduct = async () => {
 };
 
 // PUT product by id
-
 export const putProductById = async (id, data) => {
   try {
     const response = await fetch(`http://localhost:8000/product/update/${id}`, {
@@ -91,8 +90,21 @@ export const putProductById = async (id, data) => {
       body: JSON.stringify(data),
     });
 
+    if (!response.ok) {
+      const errorText = await response.text(); // 👈 HTML bhi safe
+      console.error("Backend error response:", errorText);
+      // throw new Error("Failed to update product");
+    }
+
     return await response.json();
   } catch (error) {
     console.log("Put product by id error", error);
+    throw error;
   }
 };
+
+//     return await response.json();
+//   } catch (error) {
+//     console.log("Put product by id error", error);
+//   }
+// };

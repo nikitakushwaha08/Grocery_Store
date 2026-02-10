@@ -4,7 +4,7 @@
 CREATE TABLE IF NOT EXISTS Product(
 product_id int auto_increment primary key, 
 product_name varchar(50) not null, 
-price decimal(10, 2), 
+price decimal(20, 2), 
 quantity int, 
 created_at timestamp default current_timestamp
 );

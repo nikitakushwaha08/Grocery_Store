@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import GetAllProducts from "../App";
-import { GetProductById } from "../App";
-import { PostProduct } from "../App";
-import { RemoveProductById } from "../App";
-import { RemoveAllProduct } from "../App";
-import { UpdateProduct } from "../App";
+import GetAllProducts from "../Pages/GetAllProducts";
+import GetProductById from "../Pages/GetProductById";
+import PostProduct from "../Pages/PostProduct";
+import RemoveProductById from "../Pages/RemoveProductById";
+import RemoveAllProduct from "../Pages/RemoveAllProduct";
+import UpdateProduct from "../Pages/UpdateProduct";
 
 function ProductRoutes() {
   return (
