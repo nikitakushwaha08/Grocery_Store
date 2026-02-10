@@ -82,8 +82,8 @@
 
 ### Push code in github -
 
-- git init -
-- git add . -
+- git init - For Initialize
+- git add . - Add all files
 - git commit -m "Initial backend API setup" -
 - git branch -M main -
 - git remote add origin https://github.com/nikitakushwaha08/Grocery_Store.git -

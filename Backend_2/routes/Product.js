@@ -108,7 +108,8 @@ export const updateById = (req, res) => {
 
   connection.query(sql, [data, product_id], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Product updation failed" });
+      console.log(err);
+      return res.status(500).json({ error: "Product updation failed" });
     } else {
       if (result.affectedRows === 0) {
         res.status(404).json({ message: "Product not found" });

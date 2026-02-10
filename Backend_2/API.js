@@ -17,7 +17,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Get all products
-app.get("/product", getProduct);
+app.get("/products", getProduct);
 
 // Get product by id
 app.get("/product/:id", getById);

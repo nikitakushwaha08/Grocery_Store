@@ -3,7 +3,7 @@
 // Get all products Done
 export const getProduct = async () => {
   try {
-    const response = await fetch("http://localhost:8000/product", {
+    const response = await fetch("http://localhost:8000/products", {
       method: "GET",
     });
     const data = await response.json();
@@ -41,7 +41,7 @@ export const addProduct = async (data) => {
       body: JSON.stringify(data),
     });
     const result = await response.json();
-    console.log("response", result);
+    // console.log("response", result);
     return result;
   } catch (error) {
     console.log("Error: ", error);
@@ -83,7 +83,7 @@ export const removeProduct = async () => {
 
 export const putProductById = async (id, data) => {
   try {
-    const response = await fetch(`http://localhost:8000/product/put/${id}`, {
+    const response = await fetch(`http://localhost:8000/product/update/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

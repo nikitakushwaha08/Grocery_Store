@@ -66,7 +66,7 @@ function GetAllProducts() {
                   <Link to={`/product/delete/${e.product_id}`}>
                     <button>Delete</button>
                   </Link>
-                  <Link to={`/product/put/${e.product_id}`}>
+                  <Link to={`/product/update/${e.product_id}`}>
                     <button style={{ marginLeft: "10px" }}>Update</button>
                   </Link>
                 </td>
@@ -159,7 +159,7 @@ function PostProduct() {
     e.preventDefault(); // stop reload
 
     addProduct(data).then((res) => {
-      console.log(res);
+      // console.log(res);
       setResponse(res);
       setData({
         product_name: "",
@@ -213,11 +213,17 @@ function PostProduct() {
 }
 
 //  DELETE product by id
+
 function RemoveProductById() {
   const { id } = useParams();
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleDelete = () => {
-    deleteProductById(id);
+    if (!isDeleted) {
+      deleteProductById(id).then(() => {
+        setIsDeleted(true);
+      });
+    }
   };
 
   return (
@@ -225,21 +231,27 @@ function RemoveProductById() {
       <Link to="/products">
         <button>Show product list</button>
       </Link>
+
       <br />
       <br />
-      <br />
-      <p>Product has beed deleted : {id}</p>
+
       <button onClick={handleDelete}>Delete</button>
+
+      {isDeleted && <p> Product Deleted successfully With ID : {id}</p>}
     </div>
   );
 }
 
 // DELETE all
 function RemoveAllProduct() {
+  const [isDeleted, setIsDeleted] = useState(false);
+
   const handleDelete = () => {
-    removeProduct().then((res) => {
-      console.log("All products deleted successfully", res);
-    });
+    if (!isDeleted) {
+      removeProduct().then(() => {
+        setIsDeleted(true);
+      });
+    }
   };
 
   return (
@@ -249,14 +261,15 @@ function RemoveAllProduct() {
       </Link>
       <br />
       <br />
-      <button onClick={handleDelete}>
-        <p>All Productes Are Deleted Successfully </p>
-      </button>
+      <button onClick={handleDelete}>Deleted</button>
+      {isDeleted && <p>All Productes Are Deleted Successfully </p>}
     </div>
   );
 }
 
 function UpdateProduct() {
+  const { id } = useParams();
+
   const [data, setData] = useState({
     product_id: "",
     product_name: "",
@@ -264,8 +277,20 @@ function UpdateProduct() {
     quantity: "",
   });
 
-  const [message, setMessage] = useState("");
   const [updateInfo, setUpdateInfo] = useState(null);
+
+  useEffect(() => {
+    if (id) {
+      ProductById(id).then((res) => {
+        setData({
+          product_id: res.product_id,
+          product_name: res.product_name,
+          price: res.price,
+          quantity: res.quantity,
+        });
+      });
+    }
+  }, [id]);
 
   const handleChange = (e) => {
     setData({
@@ -277,9 +302,10 @@ function UpdateProduct() {
   const handleUpdate = (e) => {
     e.preventDefault();
 
-    putProductById(data).then((res) => {
-      setMessage(res.message);
-      setUpdateInfo(res);
+    putProductById(id, data).then((res) => {
+      if (res) {
+        setUpdateInfo(res);
+      }
     });
   };
 
@@ -288,40 +314,35 @@ function UpdateProduct() {
       <Link to="/products">
         <button>Show product list</button>
       </Link>
+
       <form onSubmit={handleUpdate}>
-        <input
-          name="product_id"
-          placeholder="Product ID"
-          onChange={handleChange}
-        />
+        <input name="product_id" value={data.product_id} readOnly />
+
         <input
           name="product_name"
-          placeholder="Product Name"
+          value={data.product_name}
           onChange={handleChange}
+          placeholder="Product Name"
         />
-        <input name="price" placeholder="Price" onChange={handleChange} />
-        <input name="quantity" placeholder="Quantity" onChange={handleChange} />
+
+        <input
+          name="price"
+          value={data.price}
+          onChange={handleChange}
+          placeholder="Price"
+        />
+
+        <input
+          name="quantity"
+          value={data.quantity}
+          onChange={handleChange}
+          placeholder="Quantity"
+        />
 
         <button type="submit">Update Product</button>
       </form>
 
-      {message && <h3> {message}</h3>}
-
-      {updateInfo && (
-        <div>
-          <h4>Product ID: {updateInfo.product_id}</h4>
-
-          <h5>Old Data</h5>
-          <p>Name: {updateInfo.oldData.product_name}</p>
-          <p>Price: {updateInfo.oldData.price}</p>
-          <p>Quantity: {updateInfo.oldData.quantity}</p>
-
-          <h5>Updated Data</h5>
-          <p>Name: {updateInfo.newData.product_name}</p>
-          <p>Price: {updateInfo.newData.price}</p>
-          <p>Quantity: {updateInfo.newData.quantity}</p>
-        </div>
-      )}
+      {updateInfo && <p>Product updated successfully with id: {id}</p>}
     </>
   );
 }

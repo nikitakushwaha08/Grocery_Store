@@ -17,7 +17,7 @@ function ProductRoutes() {
         {/* done */}
         <Route path="/product/delete" element={<RemoveAllProduct />}></Route>
         {/* done */}
-        <Route path="/product/put/:id" element={<UpdateProduct />}></Route>
+        <Route path="/product/update/:id" element={<UpdateProduct />}></Route>
         {/* done */}
       </Routes>
     </BrowserRouter>
